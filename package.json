@@ -1,0 +1,45 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@livekit/components-react": "^2.9.4",
+    "@livekit/components-styles": "^1.1.5",
+    "@monaco-editor/react": "^4.7.0",
+    "@next/env": "^15.3.2",
+    "@react-three/drei": "^10.4.2",
+    "@reduxjs/toolkit": "^2.8.2",
+    "@types/file-saver": "^2.0.7",
+    "@types/lodash.debounce": "^4.0.9",
+    "file-saver": "^2.0.5",
+    "framer-motion": "^12.23.0",
+    "jszip": "^3.10.1",
+    "livekit-client": "^2.12.0",
+    "livekit-server-sdk": "^2.13.0",
+    "lodash.debounce": "^4.0.8",
+    "lucide-react": "^0.514.0",
+    "monaco-editor-webpack-plugin": "^7.1.0",
+    "next": "15.3.2",
+    "next-redux-wrapper": "^8.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
