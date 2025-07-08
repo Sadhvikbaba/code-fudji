@@ -18,9 +18,7 @@ interface Message {
   isOwn: boolean;
 }
 
-export const useDataReceived = (room: Room | null) => {
-
-  if(!room)return;
+export const useDataReceived = (room: Room) => {
   
   const dispatch = useDispatch();
   

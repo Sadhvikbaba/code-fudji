@@ -212,7 +212,7 @@ export const useLiveKitSync = (room: Room | null) => {
     } catch (error) {
       console.error('Error processing received data:', error);
     }
-  }, [room]);
+  }, [room, dispatch]);
 
   // Set up event listeners
   useEffect(() => {
