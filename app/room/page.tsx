@@ -11,6 +11,10 @@ import CustomControlBar from "../components/CustomControlBar";
 import { useDataReceived } from "../hooks/chat";
 import { useLiveKitSync } from "../hooks/liveKit";
 import { useFileTreeSync } from "../hooks/useFileTreeSync";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { addFileToTree, resetFileState } from "../store/fileSlice";
+import { setInitialMessages } from "../store/chatSlice";
 
 export default function Home() {
   const getQueryParam = (key: string): string | null => {
@@ -55,6 +59,62 @@ export default function Home() {
   useLiveKitSync(roomInstance);
   useFileTreeSync(roomInstance);
   useDataReceived(roomInstance);
+
+  interface FileSystemItem {
+  id: string;
+  name: string;
+  type: 'file' | 'directory';
+  path: string;
+  content?: string;
+  children?: FileSystemItem[];
+  size?: number;
+  lastModified?: number;
+}
+interface Message {
+  id: number;
+  user: string;
+  message: string;
+  timestamp: string;
+  isOwn: boolean;
+}
+
+
+  const dispatch = useDispatch();
+  const fileTree = useSelector((state: RootState) => state.file.fileTree);
+  const messages = useSelector((state: RootState) => state.chat.messages);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("fileTree");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        dispatch(resetFileState());
+        (parsed as FileSystemItem[]).forEach((file) => dispatch(addFileToTree(file)));
+      } catch (e) {
+        console.error("Failed to parse local file tree:", e);
+      }
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+  const stored = localStorage.getItem("chatMessages");
+  if (stored) {
+    try {
+      const parsed: Message[] = JSON.parse(stored);
+      dispatch(setInitialMessages(parsed));
+    } catch (e) {
+      console.error("Failed to parse chat messages:", e);
+    }
+  }
+}, [dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem("fileTree", JSON.stringify(fileTree));
+  }, [fileTree]);
+
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
 
   if (loading) return <div className="flex items-center justify-center h-screen text-white"><Loader2 className="animate-spin"/></div>;
 
