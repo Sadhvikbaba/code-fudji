@@ -454,7 +454,7 @@ const FileExplorer = forwardRef<FileExplorerRef, FileExplorerProps>(
               <div className="text-4xl mb-2">📁</div>
               <p className="text-sm">No files in workspace</p>
               <p className="text-xs text-gray-600 mt-1">
-                Create new files or upload existing ones
+                If you haven't got files in the existing room while joining, please refresh the page.
               </p>
             </div>
           ) : (
