@@ -253,7 +253,7 @@ const IDEPage: React.FC<IDEPageProps> = ({ room }) => {
             ) : (
               <div className="h-full flex items-center justify-center bg-[#252526] text-gray-400">
                 <div className="text-center">
-                  <div className="text-6xl mb-6">📝</div>
+                  <div className=" mb-6 flex justify-center"><Rocket size={40}/></div>
                   <h2 className="text-2xl mb-4 text-white">Welcome to Code Fudji IDE</h2>
                   <p className="text-sm mb-6 max-w-md">
                     {explorerCollapsed 

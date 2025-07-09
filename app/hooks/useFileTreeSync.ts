@@ -30,7 +30,7 @@ export const useFileTreeSync = (room: Room | null) => {
              reliable: true,
              destinationIdentities: [participant.identity], 
             });
-        }, 1000); // Delay to ensure participant is ready
+        }, 1000);
       } catch (err) {
         console.error('Failed to sync file tree:', err);
       }

@@ -6,7 +6,7 @@ import { Room, Track } from 'livekit-client';
 import '@livekit/components-styles';
 import { useEffect, useState } from 'react';
 import ChatUI from "../pages/ChatPage";
-import { FolderCode, MessageCircleMore } from "lucide-react";
+import { FolderCode, Loader2, MessageCircleMore } from "lucide-react";
 import CustomControlBar from "../components/CustomControlBar";
 import { useDataReceived } from "../hooks/chat";
 import { useLiveKitSync } from "../hooks/liveKit";
@@ -20,6 +20,7 @@ export default function Home() {
   };
 
   const [show, setShow] = useState<'editor' | 'chat'>('editor');
+  const [loading, setLoading] = useState(true);
 
   const room = getQueryParam('room') || 'default-room';
   const name = getQueryParam('username') || 'guest';
@@ -39,6 +40,7 @@ export default function Home() {
         if (data.token) {
           await roomInstance.connect(process.env.NEXT_PUBLIC_LIVEKIT_URL!, data.token);
         }
+        if(mounted)setTimeout(() => setLoading(false), 1000);
       } catch (e) {
         console.error(e);
       }
@@ -53,6 +55,8 @@ export default function Home() {
   useLiveKitSync(roomInstance);
   useFileTreeSync(roomInstance);
   useDataReceived(roomInstance);
+
+  if (loading) return <div className="flex items-center justify-center h-screen text-white"><Loader2 className="animate-spin"/></div>;
 
   return (
     <RoomContext.Provider value={roomInstance}>

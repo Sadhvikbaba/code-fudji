@@ -153,9 +153,6 @@ export const useLiveKitSync = (room: Room | null) => {
     payload: Uint8Array,
     participant?: RemoteParticipant
   ) => {
-
-    console.log(room, room?.localParticipant, participant);
-    
     
     if (!room || !room?.localParticipant || !participant) return;
 
@@ -180,6 +177,14 @@ export const useLiveKitSync = (room: Room | null) => {
             timestamp: message.timestamp
           }));
           break;
+        case 'file_tree_sync':
+        if (!hasSynced.current) {
+          const treePayload = message.payload as FileTreeSyncPayload;
+          dispatch(resetFileState());
+          treePayload.files.forEach(file => dispatch(addFileToTree(file)));
+          hasSynced.current = true;
+        }
+        break;
 
         case 'file_created':
           const createPayload = message.payload as FileCreatedPayload;
@@ -197,14 +202,6 @@ export const useLiveKitSync = (room: Room | null) => {
             oldPath: renamePayload.oldPath,
             newName: renamePayload.newName
           }));
-          break;
-        case 'file_tree_sync':
-          if (!hasSynced.current) {
-            const treePayload = message.payload as FileTreeSyncPayload;
-            dispatch(resetFileState());
-            treePayload.files.forEach(file => dispatch(addFileToTree(file)));
-            hasSynced.current = true;
-          }
           break;
 
         default:
